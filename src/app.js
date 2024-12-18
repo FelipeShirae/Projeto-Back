@@ -4,6 +4,10 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger');
 const installRoutes = require('./routes/install');
 const authRoutes = require('./routes/auth');
+const protectedRoutes = require('./routes/protected');
+
+
+
 
 dotenv.config();
 
@@ -12,6 +16,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(express.json());
+
+
 
 // Documentação Swagger
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -35,3 +41,5 @@ app.listen(PORT, () => {
 app.use('/', installRoutes);
 
 app.use('/auth', authRoutes);
+
+app.use('/', protectedRoutes);

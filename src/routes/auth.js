@@ -14,7 +14,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ error: 'Username e password são obrigatórios.' });
   }
 
-  // Ler o arquivo de usuários
+// Ler o arquivo
   fs.readFile(usersFile, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Erro ao acessar o banco de dados.' });
@@ -27,13 +27,12 @@ router.post('/login', (req, res) => {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
-    // Verificar a senha
+    //Comparar a senhaa
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err || !isMatch) {
         return res.status(401).json({ error: 'Credenciais inválidas.' });
       }
 
-      // Gerar token JWT
       const token = jwt.sign({ username: user.username, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
       res.json({ message: 'Login bem-sucedido!', token });

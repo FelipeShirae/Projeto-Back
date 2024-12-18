@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) => {
       return res.status(403).json({ error: 'Token inválido ou expirado.' });
     }
 
-    req.user = decoded; // Adiciona os dados do token no objeto `req`
+    req.user = decoded; 
     next();
   });
 };
